@@ -1,13 +1,13 @@
 // CHAIN OF RESPONSIBILITY
 
 // Representing the tasks
-class Task {
+class TaskChain {
     // Listing priorities
     enum Priority { LOW, MEDIUM, HIGH }
     private Priority priority;
     private String name;
 
-    public Task(String name, Priority priority) {
+    public TaskChain(String name, Priority priority) {
         this.name = name;
         this.priority = priority;
     }
@@ -31,13 +31,13 @@ abstract class Handler {
     }
 
     // Abstract method, that will be implemented in subclasses
-    public abstract void handleRequest(Task task);
+    public abstract void handleRequest(TaskChain task);
 }
 
 // Handler class for low-priority tasks
 class LowPriorityHandler extends Handler {
-    public void handleRequest(Task task) {
-        if (task.getPriority() == Task.Priority.LOW) {
+    public void handleRequest(TaskChain task) {
+        if (task.getPriority() == TaskChain.Priority.LOW) {
             System.out.println("Low priority handler called " + task.getName());
         }
         else if (next != null) {
@@ -49,8 +49,8 @@ class LowPriorityHandler extends Handler {
 
 // Handler class for medium-priority tasks
 class MediumPriorityHandler extends Handler {
-    public void handleRequest(Task task) {
-        if (task.getPriority() == Task.Priority.MEDIUM) {
+    public void handleRequest(TaskChain task) {
+        if (task.getPriority() == TaskChain.Priority.MEDIUM) {
             System.out.println("Medium priority handler called " + task.getName());
         }
         else if (next != null) {
@@ -62,8 +62,8 @@ class MediumPriorityHandler extends Handler {
 
 // Handler class for high-priority tasks
 class HighPriorityHandler extends Handler {
-    public void handleRequest(Task task) {
-        if (task.getPriority() == Task.Priority.HIGH) {
+    public void handleRequest(TaskChain task) {
+        if (task.getPriority() == TaskChain.Priority.HIGH) {
             System.out.println("High priority handler called " + task.getName());
         }
         else if (next != null) {
@@ -85,9 +85,9 @@ class Chain {
         medium.setNext(high);
         high.setNext(low);
 
-        Task task1 = new Task("Task 1", Task.Priority.LOW);
-        Task task2 = new Task("Task 2", Task.Priority.MEDIUM);
-        Task task3 = new Task("Task 3", Task.Priority.HIGH);
+        TaskChain task1 = new TaskChain("Task 1", TaskChain.Priority.LOW);
+        TaskChain task2 = new TaskChain("Task 2", TaskChain.Priority.MEDIUM);
+        TaskChain task3 = new TaskChain("Task 3", TaskChain.Priority.HIGH);
 
         low.handleRequest(task1);
         low.handleRequest(task2);
