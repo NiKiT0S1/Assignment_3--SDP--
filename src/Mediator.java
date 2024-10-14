@@ -1,3 +1,5 @@
+// MEDIATOR
+
 // Interface to interaction between objects
 interface MMediator {
     void send(TaskMed task, HandlerMed handler);
